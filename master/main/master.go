@@ -38,6 +38,11 @@ func main() {
 		//return err
 		goto ERR
 	}
+
+	if err = master.InitApiServer(); err != nil {
+
+	}
+
 	// 正常退出
 	return
 
