@@ -39,15 +39,12 @@ func main() {
 		goto ERR
 	}
 
-<<<<<<< HEAD
-=======
 	// 任务管理器
 	if err = master.InitJobMgr(); err != nil {
 
 	}
 
 	// 启动API HTTP 服务
->>>>>>> 516ca5004a0f86bc70d062e4abd89d6ccc7701a3
 	if err = master.InitApiServer(); err != nil {
 
 	}

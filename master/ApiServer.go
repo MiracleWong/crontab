@@ -1,10 +1,6 @@
 package master
 
 import (
-<<<<<<< HEAD
-	"fmt"
-=======
->>>>>>> 516ca5004a0f86bc70d062e4abd89d6ccc7701a3
 	"net"
 	"net/http"
 	"strconv"
@@ -23,14 +19,9 @@ var (
 )
 
 // 保存任务的接口
-<<<<<<< HEAD
-func saveHandle(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Hello")
-=======
 func handleJobSave(w http.ResponseWriter, r *http.Request) {
 	// 任务保存到etcd 中
 
->>>>>>> 516ca5004a0f86bc70d062e4abd89d6ccc7701a3
 }
 // 初始化任务
 func InitApiServer() (err error) {
@@ -43,11 +34,7 @@ func InitApiServer() (err error) {
 
 	// 配置路由
 	mux = http.NewServeMux()
-<<<<<<< HEAD
-	mux.HandleFunc("/job/save",saveHandle)
-=======
 	mux.HandleFunc("/job/save", handleJobSave)
->>>>>>> 516ca5004a0f86bc70d062e4abd89d6ccc7701a3
 
 
 	// 启动TCP监听
