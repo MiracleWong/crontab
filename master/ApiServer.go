@@ -1,7 +1,6 @@
 package master
 
 import (
-	"fmt"
 	"net"
 	"net/http"
 	"strconv"
@@ -21,7 +20,8 @@ var (
 
 // 保存任务的接口
 func handleJobSave(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Hello")
+	// 任务保存到etcd 中
+
 }
 // 初始化任务
 func InitApiServer() (err error) {
