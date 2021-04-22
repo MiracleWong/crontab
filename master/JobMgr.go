@@ -61,14 +61,14 @@ func (jobMgr *JobMgr) SaveJob(job *common.Job) (oldJob *common.Job, err error) {
 		oldJobObj common.Job
 	)
 	// etcd 保存key
-	jobKey = "/cron/jobs/" + job.Name
+	jobKey = common.JOB_SAVE_DIR + job.Name
 
 	// 任务信息json
 	if jobValue, err = json.Marshal(job); err != nil {
 
 		return
 	}
-	println(jobValue)
+	//println(jobValue)
 
 	// 保存到etcd
 	if putResp, err = jobMgr.kv.Put(context.TODO(), jobKey, string(jobValue), clientv3.WithPrevKV()); err != nil {
@@ -77,6 +77,30 @@ func (jobMgr *JobMgr) SaveJob(job *common.Job) (oldJob *common.Job, err error) {
 	if putResp.PrevKv != nil {
 		//
 		err = json.Unmarshal(putResp.PrevKv.Value, &oldJobObj)
+		if err != nil {
+			err = nil
+			return
+		}
+		oldJob = &oldJobObj
+	}
+	return
+}
+
+// 删除任务
+func (jobMgr *JobMgr) DeleteJob(name string) (oldJob *common.Job, err error) {
+	// 删除任务
+	var (
+		jobKey    string
+		delResp   *clientv3.DeleteResponse
+		oldJobObj common.Job
+	)
+	// etcd 删除的key
+	jobKey = common.JOB_SAVE_DIR + name
+	if delResp, err = jobMgr.kv.Delete(context.TODO(), jobKey, clientv3.WithPrevKV()); err != nil {
+		return
+	}
+	if len(delResp.PrevKvs) != 0 {
+		err = json.Unmarshal(delResp.PrevKvs[0].Value, &oldJobObj)
 		if err != nil {
 			err = nil
 			return
